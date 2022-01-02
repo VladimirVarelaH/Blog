@@ -1,5 +1,7 @@
 import React, {useEffect} from "react";
 
+import { Link } from "react-router-dom";
+
 import './style.css'
 
 function Index(){
@@ -16,13 +18,13 @@ function Index(){
             {notas.map(n=>{
                 key+=1
                 return(
-                <div className="note" key={key}>
+                    <Link to={'/'+n.title} className="note" key={key}>
                     <h4>{n.title}</h4>
-                    <div className="foot">
-                        <p>Por: {n.author}</p>
-                        <p>{n.date}</p>
-                    </div>
-                </div>
+                        <div className="foot">
+                            <p>Por: {n.author}</p>
+                            <p>{n.date}</p>
+                        </div>
+                    </Link>
                 )})}
         </div>
         
