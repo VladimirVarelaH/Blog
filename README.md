@@ -7,6 +7,7 @@ En este proyecto se busca desarrollar un blog tipo como práctica del stack menc
 * Desarrollar las rutas de servidor relacionadas a la creación de posts. **DONE**
 * Desarrollar las vistas del cliente relacionadas a la lectura de posts. **DONE**
 * Desarrollar las vitas del cliente relacionadas al manejo de usuarios (Login, signup, update).
+* Desarrollar las vistas del update y delete de notas.
 
 ## Nota del progreso
 En este punto no me he encontrdado con problemas nuevos, aunque reconozco que haber tenido una idea más clara del diseño antes de maquetar habría agilizado el proceso.  
