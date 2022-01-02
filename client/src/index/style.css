@@ -1,0 +1,30 @@
+.conteiner{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.note{
+    border: 1px solid rgba(0, 0, 0, 0.822);
+    border-radius: 5%;
+    width: 50%;
+    margin-bottom: 5vh;
+}
+
+.note h4{
+    font-size: 2rem;
+    margin: 0;
+    padding: 20px;
+}
+
+.note .foot{
+    display: flex;
+    justify-content: space-between;
+    background-color: gray;
+    border-radius: 0 0 5% 5%;
+}
+
+.note:hover{
+    box-shadow: 10px 10px 5px #888888;
+}

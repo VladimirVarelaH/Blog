@@ -1,0 +1,14 @@
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 3vw;
+}
+
+nav img{
+    height: 5vw;
+}
+
+nav div a{
+    margin-right: 1vw;
+}
