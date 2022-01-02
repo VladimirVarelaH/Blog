@@ -4,7 +4,7 @@ En este proyecto se busca desarrollar un blog tipo como práctica del stack menc
 
 ## Progreso
 * Desarrollar las rutas de servidor relacionadas con el manejo de usuarios (CRUD). **DONE**
-* Desarrollar las rutas de servidor relacionadas a la creación de posts.
+* Desarrollar las rutas de servidor relacionadas a la creación de posts. **DONE**
 * Desarrollar las vistas del cliente relacionadas a la lectura de posts.
 * Desarrollar las vitas del cliente relacionadas al manejo de usuarios (Login, signup, update).
 
