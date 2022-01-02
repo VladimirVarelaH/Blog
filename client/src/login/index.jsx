@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import './style.css'
 
@@ -17,6 +18,14 @@ function LogIn(){
         event.preventDefault();
         if(data.username && data.password){
             console.log('Todo bien', data);
+            axios.post('http://127.0.0.1:5000/login', data
+            ).then(res=>{
+                console.log(res.data);
+                if (res.data == 'Loged'){
+                    alert('Sesión Iniciada')
+                }
+            }).catch(
+                err=>console.log(err))
             setData({'date':new Date()})
         }
     }
