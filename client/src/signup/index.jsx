@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import { Link } from "react-router-dom";
 
+import './style.css';
+
 import Button from "../generals/button.jsx";
 import FormSection from "../generals/input_form.jsx";
 
@@ -22,7 +24,7 @@ function SignUp(){
         }
     }
     return (
-        <section>
+        <section className="container">
             <h1>SignUp</h1>
             <form>
                 <FormSection text='Username' id='username' type='text' handler={dataHandler} value={data.username}/>
@@ -31,7 +33,7 @@ function SignUp(){
                 <FormSection text='Reingrese la Contraseña' id='password_validator' type='password' handler={dataHandler} value={data.password_validator}/>
 
                 <p>¿Ya tienes una cuenta? <Link to={'/login'}>Inicia sesión aquí</Link></p>
-                <Button text='Log In' handler={validateData}/>
+                <Button text='Log In' handler={validateData} className='form_button'/>
             </form>
         </section>
     );

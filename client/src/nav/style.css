@@ -3,6 +3,7 @@ nav{
     justify-content: space-between;
     align-items: center;
     padding-right: 3vw;
+    background-color: navy;
 }
 
 nav img{
@@ -11,4 +12,12 @@ nav img{
 
 nav div a{
     margin-right: 1vw;
+    color: white;
+    text-decoration: none;
+}
+nav div a:hover{
+    color: rgb(7, 206, 206);
+}
+nav div a:active{
+    color: rgb(25, 161, 161);
 }
