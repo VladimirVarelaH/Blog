@@ -1,16 +1,18 @@
-import React, {useEffect} from "react";
-
+import React, {useEffect, useState} from "react";
+import axios from 'axios';
 import { Link } from "react-router-dom";
 
 import './style.css'
 
 function Index(){
-    const notas = [
-        {'title':'Example', 'author':'Vlado', 'body':'Lorem Ipsum dolorem','date':'02-01-2022'},
-        {'title':'Example1', 'author':'Vlado', 'body':'Lorem Ipsum dolorem','date':'02-01-2022'},
-        {'title':'Example2', 'author':'Vlado', 'body':'Lorem Ipsum dolorem','date':'02-01-2022'},
-        {'title':'Example3', 'author':'Vlado', 'body':'Lorem Ipsum dolorem','date':'02-01-2022'}
-    ]
+    const [notas, setNotas] = useState([])
+    useEffect(()=>{
+        axios.get('http://127.0.0.1:5000/'
+        ).then(res=>{
+            console.log(res.data.notas);
+            setNotas(res.data.notas);
+        }).catch(err=>console.log(err));
+    }, [])
     let key = 0;
     return(
         <div className="conteiner">

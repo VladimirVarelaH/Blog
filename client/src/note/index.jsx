@@ -1,16 +1,24 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import {useParams} from 'react-router-dom';
 
 function Note(){
-    const params = useParams()
+    const [data, setData] = useState({});
+    const params = useParams();
+    useEffect(()=>{
+        axios.get('http://127.0.0.1:5000/nota/'+params.note
+        ).then(res=>{
+            setData({... res.data.nota});
+        }).catch(err=>console.log(err));
+    }, [])
     return(
         <div>
             <div>
-                <h1>{params.note}</h1>
-                <p>Por:</p>
+                <h1>{data.title}</h1>
+                <p>Por: {data.author}</p>
                 <hr />
             </div>
-            <p></p>
+            <p>{data.body}</p>
         </div>
     );
 }
