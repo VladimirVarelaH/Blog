@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from 'react-router-dom';
 
+import './style.css'
+
 function Note(){
     const [data, setData] = useState({});
     const params = useParams();
@@ -13,12 +15,12 @@ function Note(){
     }, [])
     return(
         <div>
-            <div>
+            <div className="title">
                 <h1>{data.title}</h1>
                 <p>Por: {data.author}</p>
-                <hr />
             </div>
-            <p>{data.body}</p>
+            <hr />
+            <p className="paragraph">{data.body}</p>
         </div>
     );
 }
