@@ -10,7 +10,7 @@ import NavBar from './components/nav/index.jsx'
 function App() {
   return (
     <>
-    <NavBar/>
+      <NavBar/>
       <Routes>
         <Route path='/' element={<Index/>}/>
         <Route path='/:note' element={<Note/>}/>
