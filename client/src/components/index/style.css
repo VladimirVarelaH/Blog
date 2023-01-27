@@ -1,19 +1,30 @@
 .conteiner{
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    /* display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px; */
 }
 
 .note{
     border: 1px solid rgba(0, 0, 0, 0.822);
-    border-radius: 5%;
-    width: 50%;
+    border-radius: 5px;
+    width: 300px;
     margin-bottom: 5vh;
     text-decoration: none;
     color: #000;
 }
 
+.note img{
+    max-width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+
+}
 .note h4{
     font-size: 2rem;
     margin: 0;
@@ -24,9 +35,18 @@
     display: flex;
     justify-content: space-between;
     background-color: gray;
-    border-radius: 0 0 5% 5%;
+    border-radius: 0 0 5px 5px;
+    padding: 10px;
 }
 
 .note:hover{
     box-shadow: 10px 10px 5px #888888;
+}
+
+header{
+    width: 50%;
+    margin: auto;
+}
+header h1{
+    text-align: center;
 }
