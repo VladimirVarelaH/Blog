@@ -14,18 +14,18 @@ function Index(){
     //     }).catch(err=>console.log(err));
     // }, [])
     const notas = [
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'},
-        {title:'Title', author:'John Doe', date:'22/01/2023'}   
+        {_id:'5536172',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'5536173',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'5536174',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'55361321',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'55361123',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'553613342',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'5536172431',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'5536172857',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'5536172545',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'55361725345',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'553617234',title:'Title', author:'John Doe', date:'22/01/2023'},
+        {_id:'553617253',title:'Title', author:'John Doe', date:'22/01/2023'}   
     ];
 
     let key = 0;
@@ -39,7 +39,7 @@ function Index(){
                 {notas.map(n=>{
                     key+=1
                     return(
-                        <Link to={'/'+n.title} className="note" key={key}>
+                        <Link to={'/'+n.title+'?note='+n._id} className="note" key={key}>
                             <img src={'/'+n.image_url?'image_placeholder.jpg':n.image_url} alt="No image aviable" />
                             <h4>{n.title}</h4>
                             <div className="foot">

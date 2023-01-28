@@ -6,6 +6,7 @@ import LogIn from './components/login/index.jsx'
 import SignUp from './components/signup';
 import Note from './components/note/index.jsx';
 import NavBar from './components/nav/index.jsx'
+import ABMNotes from './views/abm_notes';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path='/:note' element={<Note/>}/>
         <Route path='/login' element={<LogIn/>}/>
         <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/gestion-de-notas' element={<ABMNotes/>}/>
       </Routes>
     
     </>
