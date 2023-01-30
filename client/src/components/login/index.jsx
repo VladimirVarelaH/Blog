@@ -17,12 +17,10 @@ function LogIn(){
 
     const dispatcher = useDispatch();
     const is_loged = useSelector((store)=>store.loginReducer.is_loged);
-    const JWT = useSelector((store)=>store.loginReducer.jwt);
-    console.log('initial values:',{JWT, is_loged})
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (is_loged || jwtValidator(JWT)) {
+        if (is_loged || jwtValidator()) {
             dispatcher(logIn({jwt:'sdasd',is_loged:true}));
             navigate("/gestion-de-notas");
         } else {

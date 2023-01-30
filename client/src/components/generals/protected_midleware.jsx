@@ -8,20 +8,17 @@ import logIn from "../../redux/actions/logActions";
 
 function ProtectedMiddleware(){
     const dispatcher = useDispatch();
-    const is_loged = useSelector((store)=>store.loginReducer.is_loged);
-    const JWT = useSelector((store)=>store.loginReducer.jwt);
 
-    console.log('Midd', JWT, is_loged)
-    let valid_jwt = false;
-    valid_jwt = jwtValidator(JWT);
-
+    let valid_jwt = jwtValidator();
     const navigate = useNavigate();
 
     useEffect(() => {
         // Checking if user is not loggedIn
         if (!valid_jwt){
-            dispatcher(logIn({jwt:'',is_loged:false}));
+            dispatcher(logIn({is_loged:false}));
             navigate("/login");
+        } else {
+            dispatcher(logIn({is_loged:true}));
         }
 
     }, [navigate]);

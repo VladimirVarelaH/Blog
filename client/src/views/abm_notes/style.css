@@ -13,3 +13,8 @@
 .btns button:hover{
     cursor: pointer;
 }
+
+.actions{
+    display: flex;
+    gap: 5px;
+}

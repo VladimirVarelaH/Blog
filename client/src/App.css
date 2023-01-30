@@ -18,6 +18,7 @@ body{
 .box{
   width: 90%;
   margin: auto;
+  margin-top: 10px;
   background-color: white;
   padding: 10px;
   border-top: solid #d2d6de 5px;

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 function ABMNotes() {
   const navigator = useNavigate();
+
   const notas = [
     {_id:'5536172',title:'Title', author:'John Doe', date:'22/01/2023'},
     {_id:'5536173',title:'Title', author:'John Doe', date:'22/01/2023'},
@@ -25,12 +26,47 @@ function ABMNotes() {
     navigator('/crear-nota');
   }
 
+  function editNote(id){
+    navigator(`/crear-nota?note=${id}`);
+    console.log(id);
+  }
+  function deleteNote(id){
+    console.log(id);
+  }
+
   return (
     <>
       <ProtectedMiddleware/>
-      <h1>HolaMundo desde el ABM</h1>
-      <div className='btns'>
-        <button onClick={createNote} className='btn btn-success'>Crear nueva notas</button>
+      <div className="box">
+        <h1>HolaMundo desde el ABM</h1>
+        <div className='btns'>
+          <button onClick={createNote} className='btn btn-success'>Crear nueva notas</button>
+        </div>
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th scope="col">Autor</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Fecha</th>
+              <th scope='col'>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {notas.map((el, index)=>{
+              return (
+                <tr key={index}>
+                  <td>{el.title}</td>
+                  <td>{el.author}</td>
+                  <td>{el.date}</td>
+                  <td className='actions'>
+                    <button onClick={()=>{editNote(el._id)}} className='btn btn-sm btn-success'>Editar</button>
+                    <button onClick={()=>{deleteNote(el._id)}} className='btn btn-sm btn-danger'>Eliminar</button>
+                  </td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
       </div>
       
     </>
