@@ -19,7 +19,7 @@ function ProtectedMiddleware(){
 
     useEffect(() => {
         // Checking if user is not loggedIn
-        if (!is_loged || !valid_jwt){
+        if (!valid_jwt){
             dispatcher(logIn({jwt:'',is_loged:false}));
             navigate("/login");
         }

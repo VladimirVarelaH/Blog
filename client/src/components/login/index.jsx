@@ -23,6 +23,7 @@ function LogIn(){
 
     useEffect(() => {
         if (is_loged || jwtValidator(JWT)) {
+            dispatcher(logIn({jwt:'sdasd',is_loged:true}));
             navigate("/gestion-de-notas");
         } else {
             dispatcher(logIn({jwt:'',is_loged:false}));

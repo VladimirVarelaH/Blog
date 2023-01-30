@@ -9,6 +9,7 @@ import Note from './components/note/index.jsx';
 import NavBar from './components/nav/index.jsx'
 import LogedNav from './views/loged_nav';
 import ABMNotes from './views/abm_notes';
+import NewNote from './views/new_note';
 
 import { useSelector } from 'react-redux';
 
@@ -29,6 +30,7 @@ function App() {
         <Route path='/login' element={<LogIn/>}/>
         <Route path='/logout' element={<LogOut/>}/>
         <Route path='/signup' element={<SignUp/>}/>
+        <Route path='/crear-nota' element={<NewNote/>}/>
         <Route path='/gestion-de-notas' element={<ABMNotes/>}/>
       </Routes>
     

@@ -1,0 +1,15 @@
+.create-btn{
+    padding: 5px;
+    color: white;
+    background-color: rgba(78, 202, 78, 0.904);
+    border: solid 2px rgb(78, 202, 78);
+}
+.btns{
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+.btns button:hover{
+    cursor: pointer;
+}
