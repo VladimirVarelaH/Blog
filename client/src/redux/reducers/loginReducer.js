@@ -1,6 +1,6 @@
 const initialState = {
     jwt: '',
-    is_loged: false
+    is_loged: true
 }
 
 const loginReducer = (state = initialState, action)=>{
