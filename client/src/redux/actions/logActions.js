@@ -1,11 +1,11 @@
 const LOGIN = 'LOGIN';
 
-const logIn = (jwt, is_loged)=>{
+const logIn = (obj)=>{
     return {
         type: LOGIN,
         payload: {
-            jst,
-            is_loged
+            jwt:obj.jwt,
+            is_loged:obj.is_loged
         }
     }
 }
