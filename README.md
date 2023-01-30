@@ -1,6 +1,6 @@
 # Blog con React.js, MongoDB y Flask
 
-En este proyecto se busca desarrollar un blog tipo como práctica del stack mencionado en el título:
+En este proyecto se busca desarrollar un blog tipo como práctica del stack mencionado en el título.
 
 ## Progreso
 * Desarrollar las rutas de servidor relacionadas con el manejo de usuarios (CRUD). **DONE**
