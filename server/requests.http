@@ -1,5 +1,9 @@
 ###
 GET http://localhost:5000/test HTTP/1.1
+###
+GET http://localhost:5000/test-permissions HTTP/1.1
+_token: eyJhbGciOiJIUzI1NiIsInR5xcCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIn0.-mwT8PGtVsO8mAaw6bbhMvHbte-NNd95a3CokY2QGR0
+
 
 ###
 GET http://localhost:5000/ HTTP/1.1

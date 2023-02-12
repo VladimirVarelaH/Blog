@@ -1,4 +1,4 @@
-from flask import Blueprint, request 
+from flask import Blueprint, request, jsonify, Response
 from flask_cors import cross_origin
 import sys
 import pathlib
@@ -15,18 +15,30 @@ from db import collection_posts, collection_users
 from middlewares.auth import verifyToken 
 
 protected_routes = Blueprint('protected_routes', __name__, template_folder='templates')
-# protected_routes.wsgi_app = middleware(protected_routes.wsgi_app)
+
+
+# @protected_routes.before_request
+# def route_middleware():
+#     header_token = request.headers.get('token')
+#     token = verifyToken(header_token)
+#     if request.method.lower() == 'options':
+#         # file.write("In basic_authentication ; returning Response()")
+#         return Response()
+#     if (token['status']=='err'):
+#         print('F', request.headers.get('token'))
+#         return {'msg':'invalid token', 'title':'Error','status':'error'}, 403
+
+
+#     request.json['token'] = token
 
 @protected_routes.before_request
 def route_middleware():
-    header_token = request.headers.get('_token')
-    token = verifyToken(header_token)
-
-    if (token['status']=='err'):
-        return {'msg':'invalid token', 'title':'Error','status':'error'}, 403
-
-    request.json['token'] = token
-
+    if request.method.lower() != 'options':
+        token = verifyToken(request.headers.get('token'))
+        print(token)
+        if (token['status']=='err'):
+            print('rrr')
+            return jsonify({'msg':'invalid token', 'title':'Error','status':'error'}), 403
 
 @protected_routes.route('/test-permissions', methods=['POST'])
 @cross_origin(supports_credentials=True)
@@ -48,14 +60,20 @@ def create_note():
             data['date'] = request.json['date']
 
         collection_posts.insert_one(data)
+        response = jsonify({'msg':'Nota '+request.json['title']+' creada', 'title':'Éxito!','status':'success'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 201
         return {'msg':'Nota '+request.json['title']+' creada', 'title':'Éxito!','status':'success'}, 201
     else:
-        return {'msg':'Por favor, revisa los datos y vuelve a intentarlo más tarde o contacta a soporte', 'error':'missing parameters', 'Titile':'Error', 'status':'error'}, 400
+        response = jsonify({'msg':'Por favor, revisa los datos y vuelve a intentarlo más tarde o contacta a soporte', 'error':'missing parameters', 'Titile':'Error', 'status':'error'})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response, 400
 
 
 @protected_routes.route('/nota', methods=['PUT'])
 @cross_origin(supports_credentials=True)
 def update_note():
+    # print(request.headers.get('token'))
     if(request.json.get('_id') and request.json.get('data')):
         try:
             _id = ObjectId(request.json['_id'])

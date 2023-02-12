@@ -16,7 +16,11 @@ sys.path.insert(0, path)
 from db import collection_posts, collection_users
 
 public_routes = Blueprint('public_routes', __name__, template_folder='templates')
- 
+
+# @public_routes.before_request
+# def error():
+#     print('OIH')
+
 @public_routes.route('/test')
 def test():
     """
@@ -49,7 +53,7 @@ def index():
     response = json.dumps(response)
     return response
 
-@public_routes.route('/nota/<note>', methods=['GET'])
+@public_routes.route('/nota/<id>', methods=['GET'])
 @cross_origin(supports_credentials=True)
 def note(id):
     """
