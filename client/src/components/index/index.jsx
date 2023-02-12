@@ -5,28 +5,14 @@ import { Link } from "react-router-dom";
 import './style.css'
 
 function Index(){
-    // const [notas, setNotas] = useState([])
-    // useEffect(()=>{
-    //     axios.get('http://127.0.0.1:5000/'
-    //     ).then(res=>{
-    //         console.log(res.data.notas);
-    //         setNotas(res.data.notas);
-    //     }).catch(err=>console.log(err));
-    // }, [])
-    const notas = [
-        {_id:'5536172',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'5536173',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'5536174',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'55361321',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'55361123',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'553613342',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'5536172431',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'5536172857',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'5536172545',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'55361725345',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'553617234',title:'Title', author:'John Doe', date:'22/01/2023'},
-        {_id:'553617253',title:'Title', author:'John Doe', date:'22/01/2023'}   
-    ];
+    const [notas, setNotas] = useState([])
+    useEffect(()=>{
+        axios.get('http://127.0.0.1:5000/'
+        ).then(res=>{
+            // console.log(res.data.notas);
+            setNotas(res.data.notas);
+        }).catch(err=>console.log(err));
+    }, [])
 
     let key = 0;
     return(

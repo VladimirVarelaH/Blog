@@ -2,11 +2,22 @@ import './style.css'
 
 import ProtectedMiddleware from '../../components/generals/protected_midleware.jsx';
 import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import axios from 'axios';
 
 function ABMNotes() {
   const navigator = useNavigate();
+  const [notas, setNotas] = useState([])
 
-  const notas = [
+  useEffect(()=>{
+    axios.get('http://127.0.0.1:5000/'
+    ).then(res=>{
+        // console.log(res.data.notas);
+        setNotas(res.data.notas);
+    }).catch(err=>console.log(err));
+  }, [])
+
+  const notas2 = [
     {_id:'5536172',title:'Title', author:'John Doe', date:'22/01/2023'},
     {_id:'5536173',title:'Title', author:'John Doe', date:'22/01/2023'},
     {_id:'5536174',title:'Title', author:'John Doe', date:'22/01/2023'},

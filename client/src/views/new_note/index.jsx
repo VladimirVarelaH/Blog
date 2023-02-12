@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { useEffect } from "react";
+import axios from 'axios';
 
 import ProtectedMiddleware from '../../components/generals/protected_midleware.jsx';
 import FormSection from "../../components/generals/input_form.jsx";
@@ -23,26 +24,32 @@ function NewNote(){
     }
 
     useEffect(()=>{
-
-    
         if (search.note){
-            let data = {
-                title: 'Titulo',
-                author: 'John John',
-                body: ['Hola','Mundo!']
-            }
-            data.body = data.body.join('\n');
+
+            axios.get('http://127.0.0.1:5000/nota/'+search.note).then(res=>{
+                let local_data = res.data.nota
+                local_data.body = local_data.body.join('\n');
     
-            if (data.body) setData({...data,body:data.body});
-            if (data.title) setData({... data, title:data.title});
-            if (data.author) setData({...data, author:data.author});
+                setData(local_data);
+            }).catch(err=>{
+                console.log(err)
+            })
         }
     },[])
 
     function getData (){
         const body = formatText();
         if (body.length && data.title && data.author){
-            console.log({body, title:data.title, author:data.author});
+            const token = localStorage.getItem('__token');
+            console.log({body, title:data.title, author:data.author}, token);
+            axios.put('http://localhost:5000/nota', {
+                    data:{
+                        body, title:data.title, author:data.author
+                    },
+                    _id:search.note
+                }, {headers:{token:token, 'oiahd':'oaihdoi'}}).then(res=>{
+                console.log('res', res.data)
+            }).catch(err=>console.log(err))
         } 
     }
     function formatText(){

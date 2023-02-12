@@ -37,9 +37,14 @@ function LogIn(){
     function validateData(event){
         event.preventDefault();
         if(data.username && data.password){
-            localStorage.setItem('__token', 'asfasf');
-            dispatcher(logIn({jwt:'asfasf',is_loged:true}));
-            navigate("/gestion-de-notas");
+            axios.post('http://localhost:5000/login', {username:data.username, password: data.password}).then(res=>{
+                console.log(res.data.data.jwt);
+                localStorage.setItem('__token', res.data.data.jwt);
+                dispatcher(logIn({jwt:res.data.data.jwt,is_loged:true}));
+                navigate("/gestion-de-notas");
+            }).catch(err=>{
+                console.log(err);
+            })
             
         } else {
             // Alerts on the fitire
