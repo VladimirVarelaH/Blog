@@ -1,6 +1,5 @@
 from flask import Blueprint, request 
 from flask_cors import cross_origin
-import json
 import sys
 import pathlib
 from bson import ObjectId
@@ -11,75 +10,116 @@ path = path.split('\\')
 path.pop()
 path = '/'.join([str(elem) for elem in path])
 sys.path.insert(0, path)
+
 from db import collection_posts, collection_users
+from middlewares.auth import verifyToken 
 
 protected_routes = Blueprint('protected_routes', __name__, template_folder='templates')
+# protected_routes.wsgi_app = middleware(protected_routes.wsgi_app)
+
+@protected_routes.before_request
+def route_middleware():
+    header_token = request.headers.get('_token')
+    token = verifyToken(header_token)
+
+    if (token['status']=='err'):
+        return {'msg':'invalid token', 'title':'Error','status':'error'}, 403
+
+    request.json['token'] = token
+
+
+@protected_routes.route('/test-permissions', methods=['POST'])
+@cross_origin(supports_credentials=True)
+def test_permissions():
+    print('testing', request.json)
+    return ('ohado')
+
 
 @protected_routes.route('/nota', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def create_note():
-    collection_posts.insert_one(request.json)
-    return 'Creando nota'
+    if (request.json.get('title') and request.json.get('body') and request.json.get('author')):
+        data = {
+            "title":request.json['title'],
+            "body":request.json['body'],
+            "author":request.json['author'],
+        }
+        if (request.json.get('date')):
+            data['date'] = request.json['date']
 
-@protected_routes.route('/nota/<_id>', methods=['PUT'])
-@cross_origin(supports_credentials=True)
-def update_note(_id):
-    _id = ObjectId(_id)
-    collection_posts.update_one({'_id':_id}, {'$set':request.json})
-    return 'Nota actualizada'
-
-@protected_routes.route('/nota/<_id>', methods=['DELETE'])
-@cross_origin(supports_credentials=True)
-def delete_note(_id):
-    _id = ObjectId(_id)
-    collection_posts.delete_one({'_id':_id})
-    return 'Nota eliminada'
-
-#__Login__#   
-@protected_routes.route('/login', methods=['POST'])
-@cross_origin(supports_credentials=True)
-def login():
-    user = collection_users.find_one({'username':request.json['username']})
-    if (user and user['password'] == request.json['password']):
-        return 'Loged'
+        collection_posts.insert_one(data)
+        return {'msg':'Nota '+request.json['title']+' creada', 'title':'Éxito!','status':'success'}, 201
     else:
-        return 'Sign Up'
+        return {'msg':'Por favor, revisa los datos y vuelve a intentarlo más tarde o contacta a soporte', 'error':'missing parameters', 'Titile':'Error', 'status':'error'}, 400
 
-@protected_routes.route('/register', methods=['POST'])
+
+@protected_routes.route('/nota', methods=['PUT'])
 @cross_origin(supports_credentials=True)
-def create_user():
-    user = collection_users.find_one({'username':request.json['username']})
-    if(user):
-        print(user, request.json)
-        return 'loged'
+def update_note():
+    if(request.json.get('_id') and request.json.get('data')):
+        try:
+            _id = ObjectId(request.json['_id'])
+            updated = collection_posts.update_one({'_id':_id}, {'$set':request.json['data']})
+            print(updated)
+            return {'msg':'Nota actualizada', 'title':'Éxito!','status':'success'}, 201
+        except Exception:
+            return {'msg':'Ocurrió un error', 'error':'unknown werror', 'Titile':'Error', 'status':'error'}, 500
     else:
-        collection_users.insert_one(request.json)
-        return 'signup'
+        return {'msg':'Por favor, vuelve a intentarlo más tarde o contacta a soporte', 'error':'no _id recibed', 'Titile':'Error', 'status':'error'}, 400
 
+
+@protected_routes.route('/nota', methods=['DELETE'])
+@cross_origin(supports_credentials=True)
+def delete_note():
+    if(request.json.get('_id')):
+        try:
+            _id = ObjectId(request.json['_id'])
+            collection_posts.delete_one({'_id':_id})
+            return {'msg':'Nota eliminada', 'title':'Éxito!','status':'success'}, 200
+        except Exception as inst:
+            return {'msg':'Ocurrió un error', 'error':inst, 'Titile':'Error', 'status':'error'}, 500
+    else:
+        return {'msg':'Por favor, vuelve a intentarlo más tarde o contacta a soporte', 'error':'no _id recibed', 'Titile':'Error', 'status':'error'}, 400
+    
+
+#__Users__#   
 @protected_routes.route('/register', methods=['PUT'])
 @cross_origin(supports_credentials=True)
 def update_user():
-    key = request.json['username']
-    lista = list(request.json["data"].keys())
-    data = {}
-    for i in lista:
-        data[i] = request.json['data'][i]
-    try:
-        # Actualiza el nombre en la tabla de usuarios y en la de posts
-        collection_posts.update_many({"author":request.json['username']}, {"$set":{"author":data['username']}})
-        collection_users.update_one({"username":key},{"$set":data})
-    except KeyError:
-        collection_users.update_one({"username":key},{"$set":data})
-    return 'Actualizado'
+    if (request.json.get('username') and request.json.get('data')):
+        key = request.json['username']
+        lista = list(request.json["data"].keys())
+        data = {}
+        for i in lista:
+            data[i] = request.json['data'][i]
+        try:
+            # Actualiza el nombre en la tabla de usuarios y en la de posts
+            collection_posts.update_many({"author":request.json['username']}, {"$set":{"author":data['username']}})
+            collection_users.update_one({"username":key},{"$set":data})
+        except KeyError:
+            collection_users.update_one({"username":key},{"$set":data})
+        return {'msg':'Usuario '+key+' actualizado', 'title':'Éxito!','status':'success'}, 201
+
+    else:
+        return {'msg':'Por favor, vuelve a intentarlo más tarde o contacta a soporte', 'error':'no username recibed', 'Titile':'Error', 'status':'error'}, 400
+
 
 @protected_routes.route('/register', methods=['DELETE'])
 @cross_origin(supports_credentials=True)
 def drop_user():
-    collection_users.delete_one({'username':request.json['username']})
-    return 'Usuario eliminado'
+    if (request.json.get('username')):
+        collection_users.delete_one({'username':request.json['username']})
+        return {'msg':'Usuario '+request.json['username']+' actualizado', 'title':'Éxito!','status':'success'}, 201
+    else:
+        return {'msg':'Por favor, vuelve a intentarlo más tarde o contacta a soporte', 'error':'no username recibed', 'Titile':'Error', 'status':'error'}, 400
+
 
 @protected_routes.route('/permisos', methods=['PUT'])
 @cross_origin(supports_credentials=True)
 def update_permisos():
-    collection_users.update_one({"username":request.json['username']},{"$set":{"type":request.json['type']}})
-    return 'Permisos actualizados'
+    if (request.json.get('username') and request.json.get('permissions')):
+        collection_users.update_one({"username":request.json['username']},{"$set":{"permissions":request.json['permissions']}})
+        # collection_users.delete_one({'username':request.json['username']})
+        return {'msg':'Usuario '+request.json['username']+' actualizado', 'title':'Éxito!','status':'success'}, 201
+    else:
+        return {'msg':'Por favor, vuelve a intentarlo más tarde o contacta a soporte', 'error':'no username recibed', 'Titile':'Error', 'status':'error'}, 400
